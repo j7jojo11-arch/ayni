@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نظام الحضور والغياب</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    direction: rtl;
+    background: #f4f6fb;
+    color: #1a1a1a;
+    min-height: 100vh;
+  }
+  .header {
+    background: #185FA5;
+    color: white;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .header h1 { font-size: 20px; font-weight: bold; }
+  .header p  { font-size: 12px; color: #B5D4F4; margin-top: 3px; }
+  .header .date-box { text-align: left; font-size: 12px; color: #B5D4F4; }
+
+  .container { max-width: 700px; margin: 0 auto; padding: 20px 16px; }
+
+  /* Gender toggle */
+  .gender-row { display: flex; gap: 10px; margin-bottom: 18px; }
+  .gbtn {
+    flex: 1; padding: 10px; border-radius: 10px;
+    border: 1.5px solid #ccc; background: #fff;
+    color: #666; font-size: 15px; cursor: pointer;
+    font-family: inherit; transition: all 0.15s;
+  }
+  .gbtn.active-m { border-color: #185FA5; background: #E6F1FB; color: #0C447C; font-weight: bold; }
+  .gbtn.active-f { border-color: #993556; background: #FBEAF0; color: #72243E; font-weight: bold; }
+
+  /* Add student */
+  .add-row { display: flex; gap: 8px; margin-bottom: 18px; }
+  .add-row input {
+    flex: 1; padding: 10px 14px; border-radius: 8px;
+    border: 1px solid #ddd; background: #fff;
+    font-size: 14px; font-family: inherit; direction: rtl;
+    outline: none;
+  }
+  .add-row input:focus { border-color: #185FA5; }
+  .add-row button {
+    padding: 10px 18px; border-radius: 8px;
+    border: 1px solid #ddd; background: #fff;
+    font-size: 14px; cursor: pointer; font-family: inherit;
+    white-space: nowrap;
+  }
+  .add-row button:hover { background: #f0f0f0; }
+
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+  .stat { border-radius: 10px; padding: 12px 8px; text-align: center; }
+  .stat .num { font-size: 24px; font-weight: bold; }
+  .stat .lbl { font-size: 12px; margin-top: 2px; }
+  .s-p { background: #EAF3DE; color: #3B6D11; }
+  .s-a { background: #FCEBEB; color: #A32D2D; }
+  .s-l { background: #FAEEDA; color: #854F0B; }
+  .s-t { background: #E6F1FB; color: #185FA5; }
+
+  /* Section title */
+  .sec-title {
+    font-size: 14px; font-weight: bold; color: #185FA5;
+    border-bottom: 2px solid #185FA5;
+    padding-bottom: 6px; margin-bottom: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .sec-title span { font-size: 12px; color: #888; font-weight: normal; }
+
+  /* Student cards */
+  .s-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .s-card {
+    background: #fff; border-radius: 10px;
+    border: 1px solid #e8eaed;
+    padding: 12px 14px;
+    display: flex; align-items: center; gap: 10px;
+    transition: border-color 0.15s;
+  }
+  .s-card.st-present { border-right: 4px solid #639922; }
+  .s-card.st-absent  { border-right: 4px solid #E24B4A; }
+  .s-card.st-late    { border-right: 4px solid #EF9F27; }
+
+  .avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: bold; flex-shrink: 0;
+  }
+  .av-m { background: #B5D4F4; color: #0C447C; }
+  .av-f { background: #F4C0D1; color: #72243E; }
+
+  .s-info { flex: 1; }
+  .s-name { font-size: 14px; font-weight: 500; }
+  .s-num  { font-size: 11px; color: #999; margin-top: 1px; }
+
+  .status-btns { display: flex; gap: 6px; }
+  .sbtn {
+    width: 36px; height: 36px; border-radius: 8px;
+    border: 1px solid #ddd; background: #f8f8f8;
+    cursor: pointer; display: flex; align-items: center;
+    justify-content: center; position: relative;
+    transition: all 0.12s;
+  }
+  .sbtn:hover { border-color: #aaa; }
+  .sbtn.sel-p { background: #EAF3DE; border-color: #639922; }
+  .sbtn.sel-a { background: #FCEBEB; border-color: #E24B4A; }
+  .sbtn.sel-l { background: #FAEEDA; border-color: #EF9F27; }
+  .sbtn svg { width: 16px; height: 16px; }
+  .chk {
+    width: 13px; height: 13px; border-radius: 50%;
+    position: absolute; bottom: -4px; right: -4px;
+    display: none; align-items: center; justify-content: center;
+    font-size: 8px; font-weight: bold; color: white;
+  }
+  .sbtn.sel-p .chk, .sbtn.sel-a .chk, .sbtn.sel-l .chk { display: flex; }
+  .sbtn.sel-p .chk { background: #639922; }
+  .sbtn.sel-a .chk { background: #E24B4A; }
+  .sbtn.sel-l .chk { background: #EF9F27; }
+
+  .del-btn {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: none; background: none; cursor: pointer;
+    color: #ccc; font-size: 18px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .del-btn:hover { background: #FCEBEB; color: #A32D2D; }
+
+  .empty { text-align: center; padding: 30px; color: #aaa; font-size: 14px; background: #fff; border-radius: 10px; border: 1px dashed #ddd; }
+
+  /* Save button */
+  .save-btn {
+    width: 100%; padding: 13px; border-radius: 10px;
+    border: none; font-size: 15px; font-weight: bold;
+    cursor: pointer; font-family: inherit;
+    transition: opacity 0.15s; margin-bottom: 10px;
+  }
+  .save-m { background: #185FA5; color: white; }
+  .save-f { background: #993556; color: white; }
+  .save-btn:hover { opacity: 0.88; }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: #1a1a1a; color: white; padding: 10px 22px;
+    border-radius: 20px; font-size: 13px;
+    opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 999;
+  }
+  .toast.show { opacity: 1; }
+
+  /* Print / PDF report */
+  #report-area { display: none; }
+
+  @media print {
+    body { background: white; }
+    .no-print { display: none !important; }
+    #report-area { display: block !important; }
+    .header { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  }
+
+  @media (max-width: 480px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .header h1 { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header no-print">
+  <div>
+    <h1>نظام الحضور والغياب</h1>
+    <p>المدارس السعودية</p>
+  </div>
+  <div class="date-box" id="date-box"></div>
+</div>
+
+<div class="container no-print">
+
+  <!-- Gender -->
+  <div class="gender-row">
+    <button class="gbtn active-m" id="btn-m" onclick="setGender('male')">&#x1F468;&#x200D;&#x1F393; طالب</button>
+    <button class="gbtn" id="btn-f" onclick="setGender('female')">&#x1F469;&#x200D;&#x1F393; طالبة</button>
+  </div>
+
+  <!-- Add -->
+  <div class="add-row">
+    <input type="text" id="name-input" placeholder="اكتب اسم الطالب..." onkeydown="if(event.key==='Enter')addStudent()" />
+    <button onclick="addStudent()">+ إضافة</button>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat s-p"><div class="num" id="cnt-p">0</div><div class="lbl">حاضر</div></div>
+    <div class="stat s-a"><div class="num" id="cnt-a">0</div><div class="lbl">غائب</div></div>
+    <div class="stat s-l"><div class="num" id="cnt-l">0</div><div class="lbl">متأخر</div></div>
+    <div class="stat s-t"><div class="num" id="cnt-t">0</div><div class="lbl">الإجمالي</div></div>
+  </div>
+
+  <!-- List -->
+  <div class="sec-title">
+    <span id="list-title">قائمة الطلاب</span>
+    <span id="unsaved-hint"></span>
+  </div>
+  <div class="s-list" id="s-list">
+    <div class="empty">أضف أسماء الطلاب للبدء</div>
+  </div>
+
+  <!-- Buttons -->
+  <button class="save-btn save-m" id="save-btn" onclick="printReport()">&#x1F4BE; حفظ وطباعة السجل</button>
+
+</div>
+
+<!-- Print report -->
+<div id="report-area"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+let gender = 'male';
+let students = [];
+let nextId = 1;
+
+function init() {
+  const now = new Date();
+  const days = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+  const months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+  document.getElementById('date-box').innerHTML =
+    days[now.getDay()] + '<br>' + now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
+}
+
+function setGender(g) {
+  gender = g;
+  document.getElementById('btn-m').className = 'gbtn' + (g==='male' ? ' active-m' : '');
+  document.getElementById('btn-f').className = 'gbtn' + (g==='female' ? ' active-f' : '');
+  document.getElementById('name-input').placeholder = g==='male' ? 'اكتب اسم الطالب...' : 'اكتب اسم الطالبة...';
+  document.getElementById('save-btn').className = 'save-btn ' + (g==='male' ? 'save-m' : 'save-f');
+  render();
+}
+
+function addStudent() {
+  const inp = document.getElementById('name-input');
+  const name = inp.value.trim();
+  if (!name) return;
+  students.push({ id: nextId++, name, gender, status: null });
+  inp.value = '';
+  inp.focus();
+  render();
+  showToast('تمت إضافة: ' + name);
+}
+
+function setStatus(id, st) {
+  const s = students.find(x => x.id === id);
+  if (s) { s.status = s.status === st ? null : st; render(); }
+}
+
+function deleteStudent(id) {
+  students = students.filter(s => s.id !== id);
+  render();
+}
+
+function initials(name) {
+  return name.trim().split(' ').slice(0,2).map(w => w[0]).join('');
+}
+
+function render() {
+  const list = students.filter(s => s.gender === gender);
+  document.getElementById('list-title').textContent = gender==='male' ? 'قائمة الطلاب' : 'قائمة الطالبات';
+  document.getElementById('cnt-p').textContent = list.filter(s=>s.status==='present').length;
+  document.getElementById('cnt-a').textContent = list.filter(s=>s.status==='absent').length;
+  document.getElementById('cnt-l').textContent = list.filter(s=>s.status==='late').length;
+  document.getElementById('cnt-t').textContent = list.length;
+
+  const unset = list.filter(s=>!s.status).length;
+  document.getElementById('unsaved-hint').textContent = unset > 0 ? ('⚠ ' + unset + ' لم يُسجَّل بعد') : (list.length > 0 ? '✓ مكتمل' : '');
+
+  const el = document.getElementById('s-list');
+  if (!list.length) {
+    el.innerHTML = '<div class="empty">لا يوجد ' + (gender==='male'?'طلاب':'طالبات') + ' بعد</div>';
+    return;
+  }
+
+  el.innerHTML = list.map((s,i) => {
+    const avCls = s.gender==='male' ? 'av-m' : 'av-f';
+    const cardCls = s.status ? 's-card st-'+s.status : 's-card';
+    const pCls = s.status==='present' ? 'sbtn sel-p' : 'sbtn';
+    const aCls = s.status==='absent'  ? 'sbtn sel-a' : 'sbtn';
+    const lCls = s.status==='late'    ? 'sbtn sel-l' : 'sbtn';
+    const gLabel = s.gender==='male' ? 'طالب' : 'طالبة';
+    return `<div class="${cardCls}">
+      <div class="avatar ${avCls}">${initials(s.name)}</div>
+      <div class="s-info">
+        <div class="s-name">${s.name}</div>
+        <div class="s-num">${gLabel} #${String(i+1).padStart(2,'0')}</div>
+      </div>
+      <div class="status-btns">
+        <button class="${pCls}" title="حاضر" onclick="setStatus(${s.id},'present')">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="#639922" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="chk">✓</span>
+        </button>
+        <button class="${aCls}" title="غائب" onclick="setStatus(${s.id},'absent')">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 3l10 10M13 3L3 13" stroke="#E24B4A" stroke-width="2.2" stroke-linecap="round"/></svg>
+          <span class="chk">✓</span>
+        </button>
+        <button class="${lCls}" title="متأخر" onclick="setStatus(${s.id},'late')">
+          <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#EF9F27" stroke-width="2"/><path d="M8 5v3.5l2 1.5" stroke="#EF9F27" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span class="chk">✓</span>
+        </button>
+      </div>
+      <button class="del-btn" title="حذف" onclick="deleteStudent(${s.id})">×</button>
+    </div>`;
+  }).join('');
+}
+
+function printReport() {
+  const list = students.filter(s => s.gender === gender);
+  if (!list.length) { showToast('لا يوجد طلاب في القائمة'); return; }
+
+  const now = new Date();
+  const days = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+  const months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+  const dateStr = days[now.getDay()] + ' ' + now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
+
+  const p = list.filter(s=>s.status==='present').length;
+  const a = list.filter(s=>s.status==='absent').length;
+  const l = list.filter(s=>s.status==='late').length;
+
+  const statusAr = { present:'حاضر', absent:'غائب', late:'متأخر', null:'—' };
+  const statusColor = { present:'#3B6D11', absent:'#A32D2D', late:'#854F0B' };
+  const statusBg = { present:'#EAF3DE', absent:'#FCEBEB', late:'#FAEEDA' };
+
+  const rows = list.map((s,i) => `
+    <tr style="background:${i%2===0?'#fff':'#F9FAFB'}">
+      <td style="padding:9px 14px;font-size:13px;">${s.name}</td>
+      <td style="padding:9px 14px;text-align:center;">
+        ${s.status ? `<span style="background:${statusBg[s.status]};color:${statusColor[s.status]};padding:3px 14px;border-radius:20px;font-size:12px;font-weight:bold;">${statusAr[s.status]}</span>` : '—'}
+      </td>
+      <td style="padding:9px 14px;text-align:center;color:#999;font-size:13px;">${String(i+1).padStart(2,'0')}</td>
+    </tr>`).join('');
+
+  document.getElementById('report-area').innerHTML = `
+    <div style="font-family:Tahoma,Arial,sans-serif;direction:rtl;max-width:700px;margin:0 auto;">
+      <div style="background:#185FA5;color:white;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <div style="font-size:20px;font-weight:bold;">نظام الحضور والغياب</div>
+          <div style="font-size:12px;color:#B5D4F4;margin-top:4px;">المدارس السعودية</div>
+        </div>
+        <div style="font-size:12px;color:#B5D4F4;text-align:left;">${dateStr}</div>
+      </div>
+      <div style="display:flex;gap:10px;padding:16px 24px;background:#f8f9fb;">
+        <div style="flex:1;background:#EAF3DE;border-radius:8px;padding:10px;text-align:center;">
+          <div style="font-size:22px;font-weight:bold;color:#3B6D11;">${p}</div>
+          <div style="font-size:12px;color:#3B6D11;">حاضر</div>
+        </div>
+        <div style="flex:1;background:#FCEBEB;border-radius:8px;padding:10px;text-align:center;">
+          <div style="font-size:22px;font-weight:bold;color:#A32D2D;">${a}</div>
+          <div style="font-size:12px;color:#A32D2D;">غائب</div>
+        </div>
+        <div style="flex:1;background:#FAEEDA;border-radius:8px;padding:10px;text-align:center;">
+          <div style="font-size:22px;font-weight:bold;color:#854F0B;">${l}</div>
+          <div style="font-size:12px;color:#854F0B;">متأخر</div>
+        </div>
+        <div style="flex:1;background:#E6F1FB;border-radius:8px;padding:10px;text-align:center;">
+          <div style="font-size:22px;font-weight:bold;color:#185FA5;">${list.length}</div>
+          <div style="font-size:12px;color:#185FA5;">الإجمالي</div>
+        </div>
+      </div>
+      <div style="padding:0 24px;">
+        <div style="font-size:14px;font-weight:bold;color:#185FA5;border-bottom:2px solid #185FA5;padding-bottom:6px;margin-bottom:10px;">
+          ${gender==='male'?'قائمة الطلاب':'قائمة الطالبات'}
+        </div>
+        <table style="width:100%;border-collapse:collapse;">
+          <thead>
+            <tr style="background:#185FA5;color:white;">
+              <th style="padding:10px 14px;text-align:right;font-size:13px;">الاسم</th>
+              <th style="padding:10px 14px;text-align:center;font-size:13px;">الحالة</th>
+              <th style="padding:10px 14px;text-align:center;font-size:13px;">رقم</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      <div style="padding:12px 24px;margin-top:10px;border-top:1px solid #eee;font-size:11px;color:#999;display:flex;justify-content:space-between;">
+        <span>نظام الحضور والغياب — المدارس السعودية</span>
+        <span>تاريخ الطباعة: ${dateStr}</span>
+      </div>
+    </div>`;
+
+  setTimeout(() => window.print(), 100);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+init();
+</script>
+</body>
+</html>
