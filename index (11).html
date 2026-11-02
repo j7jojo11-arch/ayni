@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>عيني | AYNi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06122B;--bg2:#0B1F4B;--card:#0E2A5E;--line:#2A4C93;--sky:#45C9FF;--ice:#CFEAFF;--w:#fff;--fs:1;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);background:#030B1C}
+:root[data-hc="1"]{--bg:#000;--bg2:#000;--card:#000;--line:#fff;--sky:#7FE3FF}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:#030B1C;color:var(--w);font-family:'IBM Plex Sans Arabic',Tahoma,'Segoe UI',sans-serif;font-size:calc(18px*var(--fs));line-height:1.7}
+#app{max-width:480px;margin:0 auto;height:100%;display:flex;flex-direction:column;background:radial-gradient(120% 60% at 50% 18%,#123A86 0,var(--bg) 62%);position:relative;overflow:hidden}
+:root[data-hc="1"] #app{background:#000}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+.top{display:flex;align-items:center;gap:10px;padding:12px 16px}
+.top h1{margin:0;font-size:1.15em;flex:1}
+.top h1 small{display:block;font-size:.65em;font-weight:400;color:var(--ice)}
+.ib{width:52px;height:52px;border-radius:16px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;flex:none}
+.ic{width:26px;height:26px}
+main{flex:1;overflow:auto;padding:8px 18px 24px}
+nav{display:flex;background:#050E24;border-top:1px solid var(--line)}
+:root[data-hc="1"] nav{background:#000}
+nav button{flex:1;min-height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:.78em;color:var(--ice)}
+nav button[aria-current="page"]{color:var(--sky);font-weight:700;background:var(--card);border-radius:18px;margin:6px 8px;min-height:56px}
+.btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:84px;border-radius:26px;font-weight:700;font-size:1.2em;margin-top:14px}
+.btn.p{background:linear-gradient(135deg,#45C9FF,#1E86E8);color:#04142F;box-shadow:0 0 34px #45C9FF66}
+.btn.s{background:var(--bg2);border:2px solid var(--sky);color:var(--w)}
+.sm{min-height:56px;font-size:1em;border-radius:18px;margin-top:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px 18px;margin-top:12px}
+.card h3{margin:0 0 4px;font-size:.95em;color:var(--sky)}
+.card p{margin:0}
+.c{text-align:center}
+.note{background:#1B3A7A;border:1px dashed var(--sky);border-radius:16px;padding:10px 14px;font-size:.85em;margin-top:12px}
+.orbw{display:grid;place-items:center;margin:6px 0}
+.orb{width:min(58vw,230px);aspect-ratio:1;position:relative;border-radius:50%;animation:br 5s ease-in-out infinite;filter:drop-shadow(0 0 28px #45C9FF99)}
+.orb.mini{width:104px}
+.orb svg{width:100%;height:100%;display:block}
+.pup{animation:look 7s ease-in-out infinite;transform-origin:100px 100px}
+.orb.listen::before,.orb.listen::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--sky);animation:rip 1.8s ease-out infinite}
+.orb.listen::after{animation-delay:.9s}
+.orb.speak{animation:sp .55s ease-in-out infinite}
+@keyframes br{50%{transform:scale(1.035)}}
+@keyframes look{20%{transform:translate(7px,-3px)}50%{transform:translate(-6px,4px)}80%{transform:translate(3px,5px)}}
+@keyframes rip{from{transform:scale(1);opacity:.9}to{transform:scale(1.45);opacity:0}}
+@keyframes sp{50%{transform:scale(1.07)}}
+.wave{display:flex;gap:5px;justify-content:center;height:34px;align-items:center}
+.wave i{width:6px;height:8px;border-radius:3px;background:var(--sky);opacity:.35}
+.listen~.wave i,.wave.on i{opacity:1;animation:wv .9s ease-in-out infinite}
+.wave i:nth-child(2n){animation-delay:.2s!important}.wave i:nth-child(3n){animation-delay:.4s!important}
+@keyframes wv{50%{height:30px}}
+.msgs{display:flex;flex-direction:column;gap:10px;min-height:120px}
+.m{max-width:88%;padding:12px 16px;border-radius:20px}
+.m.u{align-self:flex-start;background:var(--sky);color:#04142F}
+.m.a{align-self:flex-end;background:var(--card);border:1px solid var(--line)}
+.row{display:flex;gap:10px}
+.row>*{flex:1}
+input[type=text],input[type=time],input[type=search]{width:100%;min-height:56px;border-radius:16px;border:2px solid var(--line);background:#071A40;padding:0 14px;margin-top:8px}
+:root[data-hc="1"] input{background:#000}
+.cam{position:relative;border-radius:26px;overflow:hidden;background:#000;aspect-ratio:3/4;border:2px solid var(--sky)}
+.cam video{width:100%;height:100%;object-fit:cover}
+.frame{position:absolute;inset:12% 10%;border:3px solid var(--sky);border-radius:22px;box-shadow:0 0 30px #45C9FF88,0 0 0 999px #0008}
+.ln{position:absolute;left:10%;right:10%;height:3px;background:var(--sky);box-shadow:0 0 14px var(--sky);animation:sc 2.4s ease-in-out infinite}
+@keyframes sc{0%,100%{top:14%}50%{top:84%}}
+.sw{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:64px;width:100%;text-align:right}
+.tg{width:62px;height:34px;border-radius:17px;background:#2A4C93;position:relative;flex:none}
+.tg::after{content:"";position:absolute;top:4px;right:4px;width:26px;height:26px;border-radius:50%;background:#fff;transition:.2s}
+[aria-checked=true] .tg{background:var(--sky)}
+[aria-checked=true] .tg::after{right:32px}
+.st{font-size:.8em;color:var(--ice)}
+.thumb{width:86px;height:86px;border-radius:18px;background:#071A40;border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;flex:none}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.hd{display:flex;gap:14px;align-items:center}
+#toast{position:absolute;bottom:90px;left:16px;right:16px;background:var(--sky);color:#04142F;border-radius:18px;padding:14px 16px;font-weight:700;text-align:center;opacity:0;pointer-events:none;transition:.25s;transform:translateY(10px)}
+#toast.on{opacity:1;transform:none}
+#al{position:absolute;inset:0;background:#030B1Cee;display:none;flex-direction:column;justify-content:center;padding:24px;z-index:9}
+#al.on{display:flex}
+#sp{position:fixed;inset:0;z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;background:repeating-linear-gradient(90deg,#041030 0 14%,#071A47 14% 22%,#041030 22% 78%,#071A47 78% 86%,#041030 86% 100%);transition:opacity .8s}
+#sp.off{opacity:0;pointer-events:none}
+#sp h1{margin:18px 0 4px;font-size:2em}#sp p{margin:0;color:var(--sky)}
+.btn.ice{background:linear-gradient(135deg,#fff,#CFE6FF);color:#06224F;box-shadow:0 0 28px #CFE6FF55}
+.btn.warm{background:linear-gradient(135deg,#FF9A62,#FF4FA3 55%,#8B5CF6);color:#fff;box-shadow:0 0 28px #FF4FA355}
+.em{font-size:1.35em}.ne{font-size:1.5em;line-height:1}
+.chip{display:inline-block;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 16px;font-size:.85em}
+.chips{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 12px}
+.chp{flex:none;min-height:52px;padding:0 18px;border-radius:20px;border:2px solid var(--c);background:var(--bg2);font-weight:700}
+.chp[aria-pressed=true]{background:var(--c);color:#04142F}
+.mc{border-inline-start:8px solid var(--c)}
+.wr{margin-top:12px;border:2px solid #F5D76E;border-radius:16px;padding:12px 14px;background:#232A3E;color:#FFF3C4;font-size:.85em}
+.pop{animation:pp .5s}
+@keyframes pp{0%{transform:scale(.9)}60%{transform:scale(1.04)}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.h2{font-size:1.1em;margin:18px 0 0}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<div id="sp" role="status" aria-label="عيني | AYNi"><div class="orbw"></div><h1>عيني | AYNi</h1><p>عيني... لأن المعرفة حق للجميع.</p></div>
+<script>
+(function(){"use strict";
+const $=s=>document.querySelector(s);
+const I={mic:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/>',cam:'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',home:'<path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/>',pill:'<path d="M8.5 15.5l7-7M5 13a3.5 3.5 0 005 5l8-8a3.5 3.5 0 00-5-5z"/>',bell:'<path d="M6 17v-6a6 6 0 0112 0v6l2 2H4zM10 21h4"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>',spk:'<path d="M4 10v4h4l5 4V6l-5 4zM16 9a4 4 0 010 6M18.5 6.5a8 8 0 010 11"/>',mute:'<path d="M4 10v4h4l5 4V6l-5 4zM17 9l4 6M21 9l-4 6"/>',stop:'<rect x="6" y="6" width="12" height="12" rx="2"/>',re:'<path d="M4 12a8 8 0 108-8M4 4v5h5"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',send:'<path d="M4 12l16-8-6 16-3-7z"/>',back:'<path d="M9 5l7 7-7 7"/>',ok:'<path d="M5 12l5 5 9-10"/>',bar:'<path d="M4 6v12M8 6v12M12 6v12M16 6v12M20 6v12"/>'};
+const ic=n=>`<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${I[n]}</svg>`;
+const eye=(mini)=>`<div class="orb${mini?' mini':''}" aria-hidden="true"><svg viewBox="0 0 200 200"><defs><radialGradient id="e${mini?1:2}"><stop offset=".45" stop-color="#0A5FC0"/><stop offset=".75" stop-color="#1F9BEA"/><stop offset="1" stop-color="#45C9FF" stop-opacity="0"/></radialGradient></defs><circle cx="100" cy="100" r="98" fill="url(#e${mini?1:2})"/><circle cx="100" cy="100" r="62" fill="#0B66C8"/><circle cx="100" cy="100" r="62" fill="none" stroke="#6CD8FF" stroke-width="3" opacity=".8"/><g class="pup"><circle cx="100" cy="100" r="34" fill="#030B1E"/><circle cx="86" cy="84" r="8" fill="#C4F0FF"/></g></svg></div>`;
+const eyeOld=(mini)=>`<div class="orb${mini?' mini':''}" aria-hidden="true"><svg viewBox="0 0 200 200"><defs><radialGradient id="g${mini?1:2}" cx="38%" cy="32%"><stop offset="0" stop-color="#B5EBFF"/><stop offset=".5" stop-color="#2380E0"/><stop offset="1" stop-color="#08214F"/></radialGradient></defs><circle cx="100" cy="100" r="94" fill="url(#g${mini?1:2})"/><circle cx="100" cy="100" r="94" fill="none" stroke="#45C9FF" stroke-width="2" opacity=".7"/><g class="pup"><circle cx="100" cy="100" r="50" fill="#06122B" stroke="#45C9FF" stroke-width="3"/><circle cx="100" cy="100" r="36" fill="none" stroke="#45C9FF" stroke-width="2" stroke-dasharray="3 7"/><circle cx="100" cy="100" r="22" fill="#45C9FF"/><circle cx="100" cy="100" r="11" fill="#031030"/><circle cx="90" cy="88" r="6" fill="#fff"/></g></svg></div>`;
+
+/* ---------- state & storage ---------- */
+const DEF={voice:true,rate:1,vol:1,fs:1,hc:false,vib:true,blind:false};
+const S={view:'home',set:{...DEF},meds:[],hist:[],rem:[],ctx:null,conv:false,last:'',img:null};
+const mem={};
+const st={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return mem[k]??null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){mem[k]=v}}};
+function load(){S.set={...DEF,...(st.get('ayni_set')||{})};S.meds=st.get('ayni_meds')||[];S.hist=st.get('ayni_hist')||[];S.rem=st.get('ayni_rem')||[]}
+function save(){st.set('ayni_set',S.set);st.set('ayni_meds',S.meds);st.set('ayni_hist',S.hist);st.set('ayni_rem',S.rem)}
+function applySet(){const r=document.documentElement;r.style.setProperty('--fs',S.set.fs);r.dataset.hc=S.set.hc?1:0}
+
+/* ---------- demo data (NOT real medical information) ---------- */
+const D={name:'باراسيتامول (دواء تجريبي)',strength:'500 ملغ',form:'أقراص',maker:'شركة تجريبية',uses:'تخفيف الألم الخفيف وخفض الحرارة.',active:'باراسيتامول 500 ملغ.',how:'يُبلع القرص مع كوب من الماء.',dose:'حسب الوصفة الطبية أو إرشاد الصيدلي. لا توجد جرعة معتمدة في هذه البيانات التجريبية.',warns:'لا تتجاوز الجرعة المحددة لك. اسأل الصيدلي إذا كنت تتناول أدوية أخرى.',side:'نادرًا: طفح جلدي أو غثيان.',contra:'الحساسية تجاه المادة الفعالة.',store:'في مكان جاف بعيدًا عن الضوء والحرارة.',exp:'12/2027 (تجريبي)'};
+const SEC=[['الاستخدامات','uses'],['التركيز والشكل',m=>m.strength+' - '+m.form],['المكونات الفعالة','active'],['طريقة الاستخدام','how'],['الجرعة','dose'],['التحذيرات والاحتياطات','warns'],['الآثار الجانبية','side'],['موانع الاستخدام','contra'],['طريقة التخزين','store'],['تاريخ انتهاء الصلاحية','exp']];
+const val=(m,k)=>typeof k==='function'?k(m):m[k];
+const QA=[[/اسم/,m=>'اسم هذا الدواء '+m.name+'، بتركيز '+m.strength+'.'],[/(استخدام|يستخدم|لماذا|فائدة|دواء ل)/,m=>'استخداماته: '+m.uses],[/(كيف|طريقة)/,m=>'طريقة الاستخدام: '+m.how],[/(جرعة|مرات|موعد)/,m=>'الجرعة: '+m.dose],[/(تحذير|احتياط)/,m=>'التحذيرات: '+m.warns],[/(جانبي|أعراض|اعراض)/,m=>'الآثار الجانبية: '+m.side],[/(تخزين|احفظ|أحفظ)/,m=>'التخزين: '+m.store],[/(صلاحية|ينتهي|انتهاء)/,m=>'تاريخ الانتهاء: '+m.exp],[/(مكونات|مادة فعالة)/,m=>'المكونات الفعالة: '+m.active],[/(موانع|ممنوع)/,m=>'موانع الاستخدام: '+m.contra]];
+function answer(q){
+ if(!S.ctx)return 'لم أتعرف على دواء بعد. صوّر الدواء أولًا ثم اسألني عنه.';
+ for(const [re,f] of QA)if(re.test(q))return f(S.ctx);
+ return 'لا تتوفر لدي معلومة موثوقة تجيب عن هذا السؤال. يرجى سؤال الصيدلي أو الطبيب.';
+}
+
+/* ---------- voice ---------- */
+let rec=null,orbSt='';
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+function setOrb(s){orbSt=s;document.querySelectorAll('.orb').forEach(o=>{o.classList.toggle('listen',s==='listen');o.classList.toggle('speak',s==='speak')});document.querySelectorAll('.wave').forEach(w=>w.classList.toggle('on',s==='listen'||s==='speak'))}
+function speak(t,cb){
+ S.last=t;
+ if(!S.set.voice||!('speechSynthesis' in window)){cb&&setTimeout(cb,400);return}
+ speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(t);u.lang='ar-SA';u.rate=S.set.rate;u.volume=S.set.vol;
+ u.onstart=()=>setOrb('speak');u.onend=u.onerror=()=>{setOrb('');cb&&cb()};
+ speechSynthesis.speak(u);
+}
+function buzz(){if(S.set.vib&&navigator.vibrate)navigator.vibrate(80)}
+function toast(t,say){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2600);if(say)speak(t)}
+function listen(){
+ if(!SR){toast('هذا المتصفح لا يدعم التعرف على الصوت. اكتب سؤالك.');const q=$('#q');q&&q.focus();return}
+ try{rec&&rec.abort();rec=new SR();rec.lang='ar-SA';rec.interimResults=false;
+  rec.onstart=()=>{setOrb('listen');stat('أستمع إليك...')};
+  rec.onresult=e=>handle(e.results[0][0].transcript);
+  rec.onerror=()=>{setOrb('');S.conv=false;stat('تعذّر الاستماع. تأكد من إذن الميكروفون ثم اضغط الميكروفون.')};
+  rec.onend=()=>{if(orbSt==='listen')setOrb('')};
+  rec.start();}catch(e){stat('تعذّر تشغيل الميكروفون.')}
+}
+function stat(t){const e=$('#stat');if(e)e.textContent=t}
+
+/* ---------- chat ---------- */
+function addMsg(t,who){const b=$('#msgs');if(!b)return;const d=document.createElement('div');d.className='m '+who;d.textContent=t;b.appendChild(d);d.scrollIntoView({block:'end'})}
+function handle(text){
+ const t=text.trim();if(!t)return;addMsg(t,'u');
+ const cmd=[[/(افتح|شغل).*(كاميرا)|صور/,()=>go('scan'),'أفتح الكاميرا.'],[/(أدويتي|ادويتي)/,()=>go('meds'),'هذه أدويتك.'],[/(مواعيد|تذكير)/,()=>{go('rem');speak(todayText())},null],[/اقرأ.*معلومات/,()=>readMed(),null]];
+ for(const [re,fn,say] of cmd)if(re.test(t)){S.conv=false;if(say)speak(say);fn();return}
+ const a=answer(t);addMsg(a,'a');speak(a,()=>{if(S.conv&&S.view==='chat')listen()});
+}
+function todayText(){const l=[...S.rem].sort((a,b)=>a.time.localeCompare(b.time));return l.length?'مواعيد أدويتك اليوم: '+l.map(r=>r.name+' الساعة '+r.time).join('، '):'لا توجد مواعيد مسجلة اليوم.'}
+function readMed(){if(!S.ctx){speak('لم أتعرف على دواء بعد.');return}speak(S.ctx.name+'. '+SEC.map(([l,k])=>l+': '+val(S.ctx,k)).join('. '))}
+
+/* ---------- camera / scan ---------- */
+let stream=null,timer=null,frames=0,bd=null;
+async function startScan(){
+ frames=0;S.img=null;S.shots=[];const v=$('#vid');
+ try{
+  stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+  v.srcObject=stream;await v.play();
+  stat('وجّه الكاميرا نحو علبة الدواء. أصوّر كل ثانيتين.');speak('وجّه الكاميرا نحو علبة الدواء وثبّتها.');
+  if('BarcodeDetector' in window){try{bd=new BarcodeDetector()}catch(e){bd=null}}
+  timer=setInterval(grab,2000);
+ }catch(e){stat('تعذّر فتح الكاميرا. اسمح بالوصول إلى الكاميرا من إعدادات المتصفح، أو تابع بالبيانات التجريبية.');speak('تعذّر فتح الكاميرا.')}
+}
+const thumb=c=>{const t=document.createElement('canvas');t.width=240;t.height=Math.round(240*c.height/c.width);t.getContext('2d').drawImage(c,0,0,t.width,t.height);return t.toDataURL('image/jpeg',.6)};
+async function grab(){
+ const v=$('#vid');if(!v||!v.videoWidth)return;
+ const w=Math.min(1280,v.videoWidth),c=document.createElement('canvas'),x=c.getContext('2d');c.width=w;c.height=Math.round(w*v.videoHeight/v.videoWidth);
+ x.filter='grayscale(1) contrast(1.4)';x.drawImage(v,0,0,c.width,c.height);
+ S.shots.push(c);if(S.shots.length>5)S.shots.shift();S.img=thumb(c);frames++;
+ stat('تم التقاط '+frames+' صورة. استمر في تحريك العلبة ببطء.');
+ if(bd){try{const r=await bd.detect(v);if(r.length){stat('تم رصد باركود: '+r[0].rawValue+'. لم يتم التحقق منه لأنه لا توجد قاعدة بيانات مرتبطة.');buzz()}}catch(e){}}
+}
+function stopCam(){clearInterval(timer);timer=null;if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}}
+const AR='٠١٢٣٤٥٦٧٨٩';
+function parseMed(raw){
+ const t=raw.replace(/[٠-٩]/g,d=>AR.indexOf(d)).replace(/[ \t]+/g,' ');
+ const lines=t.split(/\n+/).map(x=>x.trim()).filter(x=>x.length>5);
+ const pick=(re,ex)=>[...new Set(lines.filter(l=>re.test(l)&&(!ex||ex.test(l))).map(l=>l.slice(0,180)))].slice(0,3);
+ const dose=pick(/(جرع|dose|dosage|يؤخذ|تؤخذ|يُؤخذ|مرات|مرة|مرتين|كل \d|ساعات|يومي|daily|times|every|hours|twice|once|take )/i,/(\d|مرة|مرتين|ثلاث|once|twice|daily|يومي)/i);
+ const reason=pick(/(يستخدم|يُستخدم|دواعي|استطباب|لعلاج|لتخفيف|لتسكين|لخفض|مسكن|خافض|مضاد|indicat|used (for|to)|relief|treatment of|for the)/i);
+ const str=[...new Set((t.match(/\d+(?:[.,]\d+)?\s?(?:mg|mcg|µg|ml|g)(?![a-z])|\d+(?:[.,]\d+)?\s?(?:ملغ|ملجم|مجم|مل|جم)/gi)||[]).map(x=>x.trim()))].slice(0,3);
+ return {dose,reason,str};
+}
+const ocrSpeak=o=>'سبب الاستخدام: '+(o.reason.length?o.reason.join('. '):'لم أجده مكتوبًا على الأجزاء المصورة')+'. الجرعة: '+(o.dose.length?o.dose.join('. '):'لم أجد تعليمات الجرعة مكتوبة، ولا تخمّن الجرعة')+'. هذه قراءة آلية قد تخطئ، فتأكد من الصيدلي أو الطبيب.';
+async function finishScan(){
+ stopCam();const shots=(S.shots||[]).slice(-3);
+ if(!shots.length){stat('لم تُلتقط أي صورة. وجّه الكاميرا نحو العلبة ثم أعد المحاولة، أو اختر صورة من المعرض.');speak('لم تُلتقط أي صورة.');return}
+ if(!window.Tesseract){stat('تعذّر تحميل أداة قراءة النص. تحقق من الإنترنت ثم أعد فتح الصفحة.');speak('تعذّر تحميل أداة قراءة النص.');return}
+ stat('جارٍ قراءة النص من الصور...');speak('جارٍ قراءة النص، انتظر قليلًا.');
+ let text='',cf=[];
+ try{
+  const wk=await Tesseract.createWorker('ara+eng',1,{logger:m=>{if(m.status==='recognizing text')stat('جارٍ القراءة '+Math.round(m.progress*100)+'%')}});
+  for(const c of shots){const r=await wk.recognize(c);text+='\n'+r.data.text;cf.push(r.data.confidence)}
+  await wk.terminate();
+ }catch(e){stat('تعذّرت قراءة النص. تحقق من الإنترنت وحاول مرة أخرى.');speak('تعذّرت قراءة النص.');return}
+ S.ocr={text:text.trim(),conf:Math.round(cf.reduce((a,b)=>a+b,0)/cf.length),...parseMed(text)};
+ S.hist.unshift({id:Date.now(),name:'دواء مصوّر',date:new Date().toLocaleDateString('ar'),img:S.img,ocr:S.ocr});S.hist=S.hist.slice(0,30);save();
+ go('ocr');buzz();speak(ocrSpeak(S.ocr));
+}
+function vOcr(){const o=S.ocr||{reason:[],dose:[],str:[],conf:0,text:''};
+ const L=(a,e)=>a.length?a.map(x=>`<p dir="auto">${esc(x)}</p>`).join(''):`<p>${e}</p>`;
+ return top('نتيجة القراءة',1)+`<main><div class="card pop"><div class="hd"><div class="thumb">${S.img?`<img src="${S.img}" alt="صورة العبوة">`:ic('pill')}</div><div><b>ما قرأته من العلبة</b><div class="st">درجة ثقة القراءة: ${o.conf}%</div></div></div></div>
+${o.conf<60?'<div class="note">القراءة غير واضحة. أعد التصوير في إضاءة أفضل وقرّب العلبة.</div>':''}
+<div class="card"><h3>سبب الاستخدام</h3>${L(o.reason,'لم أجد سبب الاستخدام مكتوبًا. صوّر النشرة الداخلية أو اسأل الصيدلي.')}</div>
+<div class="card"><h3>الجرعة</h3>${L(o.dose,'لم أجد تعليمات الجرعة مكتوبة. لا تخمّن الجرعة، وراجع وصفتك أو الصيدلي.')}${o.str.length?`<p class="st">التركيز المطبوع: ${esc(o.str.join('، '))}</p>`:''}</div>
+<div class="note">قراءة آلية قد تخطئ. تأكد من الجرعة مع الوصفة أو الصيدلي قبل تناول الدواء.</div>
+<button class="btn p sm" data-a="oread">${ic('spk')} استمع إلى النتيجة</button>
+<button class="btn s sm" data-a="go" data-v="scan">${ic('cam')} صوّر جهة أخرى من العبوة</button>
+<details class="card"><summary>النص الكامل الذي قرأته</summary><p dir="auto" style="white-space:pre-wrap;font-size:.8em">${esc(o.text)}</p></details></main>`}
+/* ---------- reminders ---------- */
+function addRem(){
+ const n=$('#rn').value.trim(),t=$('#rt').value,d=$('#rd').value.trim();
+ if(!n||!t){toast('اكتب اسم الدواء وحدد الوقت.',true);return}
+ S.rem.push({id:Date.now(),name:n,dose:d,time:t,taken:'',alerted:''});save();buzz();toast('تم حفظ التذكير لدواء '+n,true);render();
+}
+function tick(){
+ const d=new Date(),hm=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'),key=d.toDateString()+hm;
+ for(const r of S.rem){if(r.time===hm&&r.alerted!==key&&r.taken!==d.toDateString()){r.alerted=key;save();alertRem(r);break}}
+}
+function alertRem(r){
+ const a=$('#al');a.innerHTML=`<div class="card c"><h2 style="margin:0">حان موعد دوائك</h2><p style="font-size:1.4em;font-weight:700">${esc(r.name)}</p><p>${esc(r.dose)}</p>
+ <button class="btn p sm" data-a="taken" data-id="${r.id}">${ic('ok')} تناولته</button>
+ <button class="btn s sm" data-a="snooze" data-id="${r.id}">تأجيل 10 دقائق</button>
+ <button class="btn s sm" data-a="hear" data-id="${r.id}">${ic('spk')} استمع للتعليمات</button></div>`;
+ a.classList.add('on');buzz();speak('مرحبًا، حان الآن موعد دوائك '+r.name+'. هل ترغب في سماع تعليمات الاستخدام؟');
+}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- views ---------- */
+const NAV=[['home','الرئيسية','🏠'],['meds','أدويتي','💊'],['rem','التذكيرات','⏰'],['set','الإعدادات','⚙️']];
+const top=(title,back)=>`<header class="top">${back?`<button class="ib" data-a="back" aria-label="رجوع">${ic('back')}</button>`:eye(true).replace('class="orb mini"','class="orb mini" style="width:46px;animation:none"')}<h1 id="h1" tabindex="-1">${title}</h1>${back?'':`<button class="ib" data-a="voice" role="switch" aria-checked="${S.set.voice}" aria-label="المساعدة الصوتية">${ic(S.set.voice?'spk':'mute')}</button><button class="ib" data-a="go" data-v="set" aria-label="الإعدادات">${ic('gear')}</button>`}</header>`;
+const nav=()=>`<nav aria-label="التنقل الرئيسي">${NAV.map(([k,l,i])=>`<button data-a="go" data-v="${k}" ${S.view===k?'aria-current="page"':''}><span class="ne" aria-hidden="true">${i}</span><span>${l}</span></button>`).join('')}</nav>`;
+const tab=v=>['home','meds','rem','set'].includes(v);
+
+const CHIPS=[['all','الكل','#45C9FF'],['fever','🌡️ حمى','#FF8A3D'],['head','😣 صداع','#A78BFA'],['cold','🤧 زكام وحساسية','#4DA3FF'],['gut','🤢 معدة','#3DDC97']];
+const COMMON=[
+{t:['fever','head'],c:'#FF8A3D',i:'💊',n:'باراسيتامول (أسيتامينوفين)',d:'خفض الحرارة وتسكين الصداع والآلام الخفيفة.',w:'من لديه حساسية منه، أو مرض في الكبد، أو يكثر من الكحول يستشير الطبيب. لا يُجمع مع أي دواء آخر يحتوي باراسيتامول، ومنها بعض أدوية الزكام المركّبة. لا تتجاوز الحد الأقصى اليومي المكتوب على العبوة، وجرعة الأطفال بحسب الوزن.'},
+{t:['fever','head'],c:'#FF4D7D',i:'💊',n:'إيبوبروفين',d:'خفض الحرارة وتسكين الصداع وآلام الأسنان والمغص.',w:'لا يناسب من لديه قرحة أو نزيف في المعدة، أو حساسية من الأسبرين ومسكنات مشابهة، أو أمراض كلى أو قلب أو جفاف، أو حمل (يُستشار الطبيب). لا يُجمع مع الأسبرين أو النابروكسين. يُؤخذ مع الطعام.'},
+{t:['cold'],c:'#4DA3FF',i:'🤧',n:'مضاد الهيستامين (لوراتادين أو سيتريزين)',d:'تخفيف العطاس وسيلان الأنف وحكة الحساسية.',w:'قد يسبب بعضها نعاسًا، فانتبه عند القيادة. استشر الصيدلي إذا كنت حاملًا أو مرضعًا، أو لديك أمراض كلى أو كبد، أو إذا كان المريض طفلًا. لا تجمعه مع دواء حساسية آخر.'},
+{t:['cold'],c:'#45C9FF',i:'💧',n:'محلول ملحي للأنف',d:'ترطيب الأنف وتخفيف احتقانه.',w:'استخدم عبوة نظيفة ولا تشاركها مع غيرك. إذا استمر الاحتقان أكثر من أسبوع، أو صاحبته حرارة مرتفعة أو ألم شديد في الوجه، فراجع الطبيب.'},
+{t:['gut'],c:'#3DDC97',i:'🫧',n:'مضاد الحموضة',d:'تخفيف الحرقة وحموضة المعدة العارضة.',w:'قد يقلل امتصاص أدوية أخرى، فاسأل الصيدلي عن الفاصل الزمني. استشر الطبيب إذا كنت مريض كلى. إذا تكررت الحرقة، أو صاحبها ألم في الصدر أو قيء دموي أو براز أسود، فاطلب الرعاية الطبية فورًا.'},
+{t:['gut'],c:'#2DD4BF',i:'🧂',n:'أملاح معالجة الجفاف',d:'تعويض السوائل والأملاح عند الإسهال.',w:'حضّرها بالماء بالضبط كما في تعليمات العبوة. إذا كان المريض رضيعًا أو كبيرًا في السن، أو استمر القيء، أو ظهر دم في البراز، أو زادت علامات الجفاف، فراجع الطبيب فورًا.'}
+];
+const cmChips=()=>CHIPS.map(([k,l,c])=>`<button class="chp" style="--c:${c}" data-a="cf" data-k="${k}" aria-pressed="${(S.cf||'all')===k}">${l}</button>`).join('');
+const cmList=()=>COMMON.map((m,i)=>[m,i]).filter(([m])=>(S.cf||'all')==='all'||m.t.includes(S.cf)).map(([m,i])=>`<div class="card mc" style="--c:${m.c}"><div class="hd"><div class="ib" style="width:60px;height:60px;font-size:1.6em" aria-hidden="true">${m.i}</div><div style="flex:1"><b>${m.n}</b><div style="color:var(--sky);font-size:.9em">${m.d}</div></div><button class="ib" data-a="cmread" data-i="${i}" aria-label="استمع إلى معلومات ${m.n}">${ic('spk')}</button></div><div class="wr"><b>⚠️ لا يناسب أو انتبه إذا:</b> ${m.w}</div></div>`).join('');
+function vCommon(){return top('أدوية شائعة',1)+`<main><div class="chips" id="cc" role="group" aria-label="تصفية حسب العرض">${cmChips()}</div><p class="note" style="margin:0 0 4px">معلومات عامة تجريبية وليست نصيحة طبية. اسأل الصيدلي أو الطبيب قبل أي دواء، خاصة للأطفال والحوامل ومرضى الأمراض المزمنة.</p><div id="cl">${cmList()}</div></main>`}
+const COMMON_OLD=[['🤕 صداع وألم خفيف','مسكنات شائعة مثل الباراسيتامول أو الإيبوبروفين.','لا تناسب الجميع. اسأل الصيدلي عن ملاءمتها لحالتك.'],['🌡️ ارتفاع الحرارة','خافضات الحرارة مثل الباراسيتامول، مع شرب السوائل والراحة.','إذا استمرت الحرارة أكثر من ثلاثة أيام راجع الطبيب.'],['🤧 زكام واحتقان','محاليل الأنف الملحية، وأدوية الزكام المركبة.','تجنّب الجمع بين أكثر من دواء زكام دون استشارة.'],['😮‍💨 حموضة وحرقة','مضادات الحموضة المتاحة في الصيدليات.','إذا تكررت الحرقة كثيرًا فراجع الطبيب.'],['🌿 حساسية خفيفة','مضادات الهيستامين الشائعة.','قد تسبب نعاسًا. اسأل الصيدلي قبل القيادة.'],['💧 إسهال وجفاف','أملاح معالجة الجفاف مع شرب السوائل.','للأطفال وكبار السن راجع الطبيب مبكرًا.']];
+function vCommonOld(){return top('أدوية شائعة',1)+`<main><p class="note">معلومات عامة تجريبية وليست نصيحة طبية. لا تبدأ دواءً أو تغيّر جرعته قبل سؤال الصيدلي أو الطبيب، خاصة للأطفال والحوامل ومرضى الأمراض المزمنة.</p>${COMMON.map((c,i)=>`<div class="card"><h3>${c[0]}</h3><p>${c[1]}</p><p class="st">${c[2]}</p><button class="btn s sm" data-a="cread" data-i="${i}">${ic('spk')} استمع</button></div>`).join('')}</main>`}
+function vHome(){const n=new Date(),hm=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0'),nx=[...S.rem].sort((a,b)=>a.time.localeCompare(b.time)).find(r=>r.time>=hm);
+return top('عيني | AYNi')+`<main><p class="c" style="margin:0;font-weight:700;color:var(--ice)">مرحبًا بك، أنا عيني، مساعدك الذكي للتعرف على أدويتك</p><div class="orbw">${eye()}</div><div class="wave" aria-hidden="true">${'<i></i>'.repeat(9)}</div>
+<h2 class="c" style="margin:0 0 8px">كيف يمكنني مساعدتك اليوم؟</h2><div class="c"><span class="chip">${nx?'⏰ التذكير القادم: '+esc(nx.name)+' الساعة '+nx.time:'⏰ لا توجد تذكيرات قادمة اليوم'}</span></div>
+<button class="btn p" data-a="go" data-v="chat"><span class="em">🎙️</span> تحدث مع عيني</button>
+<button class="btn ice" data-a="go" data-v="scan"><span class="em">📸</span> تعرّف على دوائك</button>
+<button class="btn warm" data-a="go" data-v="common"><span class="em">💊</span> أدوية شائعة للأعراض الخفيفة</button>
+<p class="note">نسخة تجريبية: بيانات الأدوية هنا تجريبية وليست معلومات طبية حقيقية.</p></main>`}
+function vHomeOld(){return top('عيني | AYNi<small>لأن المعرفة حق للجميع</small>')+`<main><div class="orbw">${eye()}</div><div class="wave" aria-hidden="true">${'<i></i>'.repeat(9)}</div>
+<p class="c" style="margin:6px 0">مرحبًا بك، أنا عيني، مساعدك الذكي للتعرف على أدويتك.</p><h2 class="c" style="margin:0">كيف يمكنني مساعدتك اليوم؟</h2>
+<button class="btn p" data-a="go" data-v="chat">${ic('mic')} تحدث مع عيني</button>
+<button class="btn s" data-a="go" data-v="scan">${ic('cam')} تعرّف على دوائك</button>
+<p class="note">نسخة تجريبية: بيانات الأدوية في هذا التطبيق تجريبية وليست معلومات طبية حقيقية.</p></main>`}
+
+function vChat(){return top('تحدث مع عيني',1)+`<main><div class="orbw">${eye(1)}</div><div class="wave" aria-hidden="true">${'<i></i>'.repeat(9)}</div>
+<p class="st c" id="stat" role="status" aria-live="polite">اضغط الميكروفون وتحدث، أو اكتب سؤالك.</p>
+<div class="msgs" id="msgs" aria-live="polite"></div>
+<button class="btn p" data-a="mic">${ic('mic')} تحدث الآن</button>
+<div class="row"><button class="btn s sm" data-a="stopl">${ic('stop')} إيقاف</button><button class="btn s sm" data-a="replay">${ic('re')} أعد الإجابة</button><button class="btn s sm" data-a="back">${ic('x')} إنهاء</button></div>
+<div class="row" style="align-items:end"><input type="text" id="q" placeholder="اكتب سؤالك هنا" aria-label="اكتب سؤالك"><button class="ib" style="margin-top:8px" data-a="ask" aria-label="إرسال">${ic('send')}</button></div>
+<p class="note">${S.ctx?'الدواء الحالي: '+esc(S.ctx.name):'لم يتم تصوير دواء بعد. صوّر الدواء ثم اسأل عنه.'} الإجابات هنا من بيانات تجريبية محلية، ولم يُربط نموذج ذكاء اصطناعي بعد.</p></main>`}
+
+function vScan(){return top('تعرّف على دوائك',1)+`<main><div class="cam"><video id="vid" playsinline muted aria-label="عرض الكاميرا"></video><div class="frame"></div><div class="ln"></div></div>
+<p class="st c" id="stat" role="status" aria-live="polite">جارٍ فتح الكاميرا...</p>
+<button class="btn s sm" data-a="pick">${ic('cam')} التقط صورة عالية الدقة أو اختر من المعرض</button><input id="fi" type="file" accept="image/*" capture="environment" class="sr" tabindex="-1" aria-hidden="true"><button class="btn p" data-a="finish">${ic('stop')} إيقاف التصوير وعرض النتيجة</button>
+<p class="note">يلتقط التطبيق صورة كل ثانيتين. يقرأ التطبيق النص المطبوع على العبوة ويستخرج سبب الاستخدام والجرعة إن كانا مكتوبين فقط. يحتاج إنترنت لتحميل أداة القراءة.</p></main>`}
+
+function vResult(){const m=S.ctx||D;const img=S.img||(S.view==='result'&&S.hist[0]&&S.hist[0].img);
+ return top('نتيجة التعرف',1)+`<main><div class="card pop"><div class="hd"><div class="thumb">${img?`<img src="${img}" alt="صورة العبوة">`:ic('pill')}</div><div><h2 style="margin:0;font-size:1.1em">${esc(m.name)}</h2><div>${esc(m.strength)} - ${esc(m.form)}</div><div class="st">${esc(m.maker)}</div></div></div></div>
+<div class="note">حالة التحقق: غير مؤكد. المصدر: بيانات تجريبية. درجة الثقة: غير متاحة. لا تعتمد على هذه الصفحة في أي قرار دوائي.</div>
+${SEC.map(([l,k])=>`<div class="card"><h3>${l}</h3><p>${esc(val(m,k))}</p></div>`).join('')}
+<button class="btn p sm" data-a="read">${ic('spk')} استمع إلى معلومات الدواء</button>
+<button class="btn s sm" data-a="replay">${ic('re')} أعد قراءة المعلومات</button>
+<button class="btn s sm" data-a="go" data-v="chat">${ic('mic')} اسأل عيني عن هذا الدواء</button>
+<button class="btn s sm" data-a="addmed">${ic('pill')} أضف الدواء إلى أدويتي</button>
+<button class="btn s sm" data-a="remfor">${ic('bell')} أضف موعدًا للتذكير</button>
+<button class="btn s sm" data-a="go" data-v="scan">${ic('cam')} صوّر جهة أخرى من العبوة</button></main>`}
+
+function vMeds(){return top('أدويتي')+`<main>${S.meds.length?S.meds.map(m=>`<button class="card hd" style="width:100%;text-align:right" data-a="open" data-id="${m.id}"><div class="thumb">${m.img?`<img src="${m.img}" alt="">`:ic('pill')}</div><div><b>${esc(m.name)}</b><div>${esc(m.strength)}</div><div class="st">أضيف في ${esc(m.added)}${S.rem.some(r=>r.name===m.name)?' - له تذكير':''}</div></div></button>`).join(''):'<p class="card c">لم تضف أدوية بعد. اضغط «تعرّف على دوائك» ثم «أضف الدواء إلى أدويتي».</p>'}
+<h2 class="h2">سجل التعرف</h2><input type="search" id="hs" placeholder="ابحث عن دواء بالاسم" aria-label="ابحث في السجل"><div id="hl">${histList('')}</div></main>`}
+function histList(q){const l=S.hist.filter(h=>h.name.includes(q));return l.length?l.map(h=>`<div class="card"><b>${esc(h.name)}</b><div class="st">${esc(h.date)}</div><div class="row"><button class="btn s sm" data-a="hopen" data-id="${h.id}">فتح</button><button class="btn s sm" data-a="hread" data-id="${h.id}">استمع</button><button class="btn s sm" data-a="hdel" data-id="${h.id}">حذف</button></div></div>`).join(''):'<p class="card c">لا توجد نتائج في السجل.</p>'}
+
+function vRem(pre){return top('التذكيرات')+`<main>${S.rem.length?[...S.rem].sort((a,b)=>a.time.localeCompare(b.time)).map(r=>{const t=r.taken===new Date().toDateString();return `<div class="card"><div class="hd"><b style="font-size:1.6em">${r.time}</b><div style="flex:1"><b>${esc(r.name)}</b><div class="st">${esc(r.dose)}</div></div></div><div>${t?'تم تناوله اليوم ✓':'لم يُؤكَّد اليوم'}</div><div class="row"><button class="btn s sm" data-a="rtake" data-id="${r.id}">تناولته</button><button class="btn s sm" data-a="rdel" data-id="${r.id}">حذف</button></div></div>`}).join(''):'<p class="card c">لا توجد تذكيرات. أضف أول موعد من النموذج أدناه.</p>'}
+<h2 class="h2">إضافة تذكير</h2><input type="text" id="rn" placeholder="اسم الدواء" aria-label="اسم الدواء" value="${esc(pre?pre.name:'')}"><input type="text" id="rd" placeholder="الجرعة كما في الوصفة" aria-label="الجرعة" value="${esc(pre?pre.dose:'')}"><input type="time" id="rt" aria-label="وقت التذكير">
+<button class="btn p sm" data-a="radd">${ic('ok')} تأكيد وحفظ التذكير</button>
+<p class="note">يعمل التنبيه الصوتي والاهتزاز بينما التطبيق مفتوح. الإشعارات في الخلفية تحتاج تطبيقًا مثبتًا على الجهاز، ولم تُربط بعد. تأكد من الجرعة والموعد مع وصفتك أو الصيدلي.</p></main>`}
+
+function sw(k,l){return `<button class="card sw" role="switch" aria-checked="${S.set[k]}" data-a="tg" data-k="${k}"><span>${l}</span><span class="tg"></span></button>`}
+function vSet(){return top('الإعدادات')+`<main>${sw('voice','المساعدة الصوتية')}${sw('blind','وضع المكفوفين (ترحيب صوتي وقراءة تلقائية)')}${sw('hc','التباين العالي')}${sw('vib','الاهتزازات')}
+<div class="card"><label for="rate">سرعة القراءة</label><input id="rate" type="range" min=".6" max="1.5" step=".1" value="${S.set.rate}" style="width:100%;min-height:44px"></div>
+<div class="card"><label for="vol">مستوى الصوت</label><input id="vol" type="range" min=".2" max="1" step=".1" value="${S.set.vol}" style="width:100%;min-height:44px"></div>
+<div class="card"><div>حجم الخط</div><div class="row">${[[1,'عادي'],[1.2,'كبير'],[1.4,'ضخم']].map(([v,l])=>`<button class="btn s sm" data-a="fs" data-v="${v}" ${S.set.fs==v?'aria-pressed="true" style="background:var(--sky);color:#04142F"':'aria-pressed="false"'}>${l}</button>`).join('')}</div></div>
+<div class="card"><h3>الأذونات واللغة</h3><p>اللغة: العربية. أذونات الكاميرا والميكروفون يديرها المتصفح من إعدادات الموقع.</p></div>
+<div class="card"><h3>الخصوصية</h3><p>تُحفظ أدويتك وسجلك وتذكيراتك على جهازك فقط. لا تُرسل الصور إلى أي جهة.</p><button class="btn s sm" data-a="wipe">${ic('x')} حذف كل بياناتي</button></div></main>`}
+
+function render(pre){
+ const v=S.view,m={home:vHome,common:vCommon,ocr:vOcr,chat:vChat,scan:vScan,result:vResult,meds:vMeds,rem:()=>vRem(pre),set:vSet}[v]();
+ $('#app').innerHTML=m+(tab(v)?nav():'')+'<div id="toast" role="status" aria-live="polite"></div><div id="al" role="alertdialog" aria-label="تذكير دواء"></div>';
+ setOrb(orbSt);const h=$('#h1');h&&h.focus({preventScroll:true});
+ if(v==='scan')startScan();
+ const hs=$('#hs');hs&&hs.addEventListener('input',e=>{$('#hl').innerHTML=histList(e.target.value)});
+ const q=$('#q');q&&q.addEventListener('keydown',e=>{if(e.key==='Enter')act('ask')});
+ const fi=$('#fi');fi&&fi.addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const im=new Image();im.onload=()=>{const w=Math.min(1600,im.width),c=document.createElement('canvas');c.width=w;c.height=Math.round(w*im.height/im.width);c.getContext('2d').drawImage(im,0,0,c.width,c.height);S.shots=[c];S.img=thumb(c);finishScan()};im.src=URL.createObjectURL(f)});
+ const rt=$('#rate');rt&&rt.addEventListener('input',e=>{S.set.rate=+e.target.value;save()});
+ const vo=$('#vol');vo&&vo.addEventListener('input',e=>{S.set.vol=+e.target.value;save()});
+ if(rt)rt.addEventListener('change',()=>speak('هذه سرعة القراءة الحالية.'));
+}
+let prev='home';
+function go(v){if(S.view==='scan'&&v!=='scan')stopCam();if(S.view==='chat'){S.conv=false;rec&&rec.abort();speechSynthesis&&speechSynthesis.cancel();setOrb('')}if(v!==S.view&&S.view!=='scan'&&S.view!=='result'&&S.view!=='ocr'&&S.view!=='chat')prev=S.view;S.view=v;render();window.scrollTo(0,0)}
+
+function act(a,d={}){
+ const id=+d.id,M=S.meds.find(x=>x.id===id),H=S.hist.find(x=>x.id===id),R=S.rem.find(x=>x.id===id);
+ switch(a){
+  case 'go':go(d.v);break;
+  case 'back':go(prev||'home');break;
+  case 'voice':S.set.voice=!S.set.voice;if(!S.set.voice)speechSynthesis&&speechSynthesis.cancel();save();render();break;
+  case 'tg':S.set[d.k]=!S.set[d.k];save();applySet();render();if(d.k==='blind'&&S.set.blind)speak('تم تشغيل وضع المكفوفين.');break;
+  case 'fs':S.set.fs=+d.v;save();applySet();render();break;
+  case 'mic':S.conv=true;speechSynthesis&&speechSynthesis.cancel();listen();break;
+  case 'stopl':S.conv=false;rec&&rec.abort();speechSynthesis&&speechSynthesis.cancel();setOrb('');stat('تم الإيقاف.');break;
+  case 'replay':S.last?speak(S.last):toast('لا توجد إجابة لإعادتها.');break;
+  case 'ask':{const q=$('#q');if(q&&q.value.trim()){const t=q.value;q.value='';handle(t)}break}
+  case 'finish':finishScan();break;
+  case 'read':readMed();break;
+  case 'addmed':{const m=S.ctx||D;if(S.meds.some(x=>x.name===m.name)){toast('هذا الدواء موجود في أدويتك.',true);break}S.meds.unshift({...m,id:Date.now(),added:new Date().toLocaleDateString('ar'),img:S.img||(S.hist[0]&&S.hist[0].img)||null});save();buzz();toast('تمت إضافة الدواء إلى أدويتك.',true);break}
+  case 'remfor':{S.view='rem';render({name:(S.ctx||D).name,dose:''});break}
+  case 'open':S.ctx=M;S.img=M.img;prev='meds';go('result');break;
+  case 'hopen':if(H.ocr){S.ocr=H.ocr;S.img=H.img;go('ocr');break}S.ctx=D;S.img=H.img;go('result');break;
+  case 'hread':if(H.ocr){speak(ocrSpeak(H.ocr));break}S.ctx=D;readMed();break;
+  case 'hdel':S.hist=S.hist.filter(x=>x.id!==id);save();$('#hl').innerHTML=histList($('#hs').value);toast('تم حذف السجل.');break;
+  case 'radd':addRem();break;
+  case 'rdel':S.rem=S.rem.filter(x=>x.id!==id);save();render();break;
+  case 'rtake':R.taken=new Date().toDateString();save();render();toast('تم تسجيل أنك تناولت '+R.name,true);break;
+  case 'taken':R.taken=new Date().toDateString();save();$('#al').classList.remove('on');speechSynthesis.cancel();toast('تم تسجيل تناول الدواء.');if(S.view==='rem')render();break;
+  case 'snooze':{const d2=new Date(Date.now()+600000);R.time=String(d2.getHours()).padStart(2,'0')+':'+String(d2.getMinutes()).padStart(2,'0');save();$('#al').classList.remove('on');speechSynthesis.cancel();toast('تم التأجيل إلى '+R.time,true);break}
+  case 'hear':speak('تعليمات '+R.name+': اتبع الجرعة المكتوبة في وصفتك. '+(R.dose||'لم تُسجَّل جرعة لهذا التذكير.'));break;
+  case 'oread':speak(ocrSpeak(S.ocr));break;
+  case 'pick':$('#fi').click();break;
+  case 'cf':{S.cf=d.k;$('#cc').innerHTML=cmChips();$('#cl').innerHTML=cmList();const b=$('#cc [data-k="'+d.k+'"]');b&&b.focus();break}
+  case 'cmread':{const c=COMMON[+d.i];speak(c.n+'. '+c.d+' لا يناسب أو انتبه إذا: '+c.w);break}
+  case 'cread':{const c=COMMON[+d.i];speak(c[0].replace(/[^\u0600-\u06FF\s]/g,'')+'. '+c[1]+' '+c[2]);break}
+  case 'wipe':if(confirm('حذف كل الأدوية والسجل والتذكيرات؟')){S.meds=[];S.hist=[];S.rem=[];S.ctx=null;save();render();toast('تم حذف بياناتك.',true)}break;
+ }
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(b){buzz();act(b.dataset.a,b.dataset)}});
+let greeted=false;
+document.addEventListener('pointerdown',()=>{if(!greeted){greeted=true;if(S.set.blind&&S.view==='home')speak('مرحبًا، أنا عيني. يمكنك أن تطلب مني تصوير دواء أو طرح سؤال أو الاستماع إلى أدويتك.')}},{once:true});
+load();applySet();render();setInterval(tick,20000);
+$('#sp .orbw').innerHTML=eye();setTimeout(()=>{const s=$('#sp');if(s){s.classList.add('off');setTimeout(()=>s.remove(),900)}},2400);
+})();
+</script>
+</body>
+</html>
